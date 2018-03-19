@@ -1,5 +1,10 @@
+function onFinish() { //restarts the game
+  alert("You made it!!");
+  document.location.reload();
+}
+
 // Enemies our player must avoid
-const Enemy = function(x, y) {
+const Enemy = function(x, y, speed) {
   // Variables applied to each of our instances go here,
   // we've provided one for you to get started
 
@@ -8,6 +13,7 @@ const Enemy = function(x, y) {
   this.sprite = 'images/enemy-bug.png';
   this.x = x;
   this.y = y;
+  this.speed = speed;
 };
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -16,6 +22,10 @@ Enemy.prototype.update = function(dt) {
   // which will ensure the game runs at the same speed for
   // all computers.
   dt = 20;
+  if (this.x >= 500) {
+    this.x = 0;
+  }
+  this.x += this.speed;
 };
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -52,16 +62,16 @@ Player.prototype.handleInput = function(param) {
       (player1.y < 445) ? player1.y += 50: null;
       break;
     case "up":
-      (player1.y == -5) ? alert("You made it!!"): player1.y -= 50;
+      (player1.y == -5) ? null: player1.y -= 50;
       break;
   }
 };
 
 // Now instantiate your objects.
 let player1 = new Player(205, 445);
-let enemy1 = new Enemy(5, 60);
-let enemy2 = new Enemy(5, 143);
-let enemy3 = new Enemy(5, 226);
+let enemy1 = new Enemy(5, 60, 2);
+let enemy2 = new Enemy(5, 143, 3);
+let enemy3 = new Enemy(5, 226, 5);
 // Place all enemy objects in an array called allEnemies
 let allEnemies = [enemy1, enemy2, enemy3]
 // Place the player object in a variable called player
@@ -72,6 +82,10 @@ let player = player1;
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
+  if (player.y == -5) { // detects if player makes it the water
+    onFinish();
+  }
+
   let allowedKeys = {
     37: 'left',
     38: 'up',
