@@ -9,17 +9,14 @@ const Enemy = function(x, y) {
   this.x = x;
   this.y = y;
 };
-
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
   dt = 20;
 };
-
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -33,7 +30,6 @@ const Player = function(x, y) {
 }
 // This class requires an update(), render() and
 Player.prototype.update = function(dt) {
-
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
@@ -45,18 +41,18 @@ Player.prototype.render = function() {
 };
 // a handleInput() method.
 Player.prototype.handleInput = function(param) {
-  switch (param) {
+  switch (param) { // Makes sure Player can not move off screen
     case "left":
       (player1.x > 49) ? player1.x -= 50: null;
       break;
     case "right":
       (player1.x < 404) ? player1.x += 50: null;
       break;
-    case "up":
-      (player1.y > 0) ? player1.y -= 50: null;
-      break;
     case "down":
       (player1.y < 445) ? player1.y += 50: null;
+      break;
+    case "up":
+      (player1.y == -5) ? alert("You made it!!"): player1.y -= 50;
       break;
   }
 };
