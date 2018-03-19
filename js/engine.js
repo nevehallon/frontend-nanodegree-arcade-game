@@ -13,12 +13,12 @@
  * writing app.js a little simpler to work with.
  */
 
-const Engine = (function(global) {
+var Engine = (function(global) {
   /* Predefine the variables we'll be using within this scope,
    * create the canvas element, grab the 2D context for that canvas
    * set the canvas elements height/width and add it to the DOM.
    */
-  const doc = global.document,
+  var doc = global.document,
     win = global.window,
     canvas = doc.createElement('canvas'),
     ctx = canvas.getContext('2d'),
@@ -173,7 +173,8 @@ const Engine = (function(global) {
     'images/water-block.png',
     'images/grass-block.png',
     'images/enemy-bug.png',
-    'images/char-boy.png'
+    'images/char-boy.png',
+    'images/char-horn-girl.png'
   ]);
   Resources.onReady(init);
 
