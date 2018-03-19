@@ -47,16 +47,16 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(param) {
   switch (param) {
     case "left":
-      player1.x -= 50;
+      (player1.x > 49) ? player1.x -= 50: null;
       break;
     case "right":
-      player1.x += 50;
+      (player1.x < 404) ? player1.x += 50: null;
       break;
     case "up":
-      player1.y -= 50;
+      (player1.y > 0) ? player1.y -= 50: null;
       break;
     case "down":
-      player1.y += 50;
+      (player1.y < 445) ? player1.y += 50: null;
       break;
   }
 };
