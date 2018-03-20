@@ -28,7 +28,7 @@ Enemy.prototype.update = function(dt) {
   if (player1.x + 20 + player1.width > this.x + 15 &&
     player1.x + 20 < this.x + this.width + 15 &&
     player1.y + 80 + player1.height > this.y + 85 &&
-    player1.y + 80 < this.y + 85 + this.height) { //Collision detector
+    player1.y + 80 < this.y + 85 + this.height) { //Collision detector fine tuned to hit boxes of player and bugs
     document.location.reload();
   }
 
