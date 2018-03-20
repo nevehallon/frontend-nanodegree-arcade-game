@@ -14,8 +14,8 @@ const Enemy = function(x, y, speed) {
   this.x = x;
   this.y = y;
   this.speed = speed;
-  this.width = 100;
-  this.height = 75;
+  this.width = 70;
+  this.height = 50;
 };
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -25,10 +25,10 @@ Enemy.prototype.update = function(dt) {
   // all computers.
   dt = 20;
 
-  if (player1.x + player1.width > this.x &&
-    player1.x < this.x + this.width &&
-    player1.y + player1.height > this.y &&
-    player1.y < this.y + this.height) { //Collision detector
+  if (player1.x + 20 + player1.width > this.x + 15 &&
+    player1.x + 20 < this.x + this.width + 15 &&
+    player1.y + 80 + player1.height > this.y + 85 &&
+    player1.y + 80 < this.y + 85 + this.height) { //Collision detector
     document.location.reload();
   }
 
@@ -47,8 +47,8 @@ const Player = function(x, y) {
   this.sprite = 'images/char-horn-girl.png';
   this.x = x;
   this.y = y;
-  this.width = 75;
-  this.height = 90
+  this.width = 60;
+  this.height = 55;
 }
 // This class requires an update(), render() and
 Player.prototype.update = function(dt) {
