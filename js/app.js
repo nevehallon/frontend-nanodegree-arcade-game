@@ -52,6 +52,7 @@ const Player = function(x, y) {
   this.width = 60;
   this.height = 55;
   this.lives = 4;
+  this.gems = 0;
 };
 // This class requires an update(), render() and
 Player.prototype.update = function(dt) {
@@ -77,6 +78,7 @@ Player.prototype.render = function() {
   ctx.font = "16px Arial";
   ctx.fillStyle = "#0095DD";
   ctx.fillText(`Lives: ${this.lives}`, 5, 40);
+  ctx.fillText(`Gems Collected: ${this.gems}`, 105, 40);
 };
 // a handleInput() method.
 Player.prototype.handleInput = function(param) {
@@ -111,20 +113,23 @@ const Collectable = function(x, y, speedX, speedY, sprite) {
 Collectable.prototype.update = function(dt) {
   dt = 20;
 
-  if (player1.x + 20 + player1.width > this.x + 15 &&
-    player1.x + 20 < this.x + this.width + 15 &&
-    player1.y + 80 + player1.height > this.y + 75 &&
-    player1.y + 80 < this.y + this.height + 75) { //Collision detector fine tuned to hit boxes of player and Gems
-    this.state = 0;
+  if (this.state == 1) {
+    if (player1.x + 20 + player1.width > this.x + 15 &&
+      player1.x + 20 < this.x + this.width + 15 &&
+      player1.y + 80 + player1.height > this.y + 75 &&
+      player1.y + 80 < this.y + this.height + 75) { //Collision detector fine tuned to hit boxes of player and Gems
+      this.state = 0;
+      player1.gems += 1;
+    }
   }
 
-  if (this.x + this.speedX + 90 > ctx.canvas.width) {
+  if (this.x + this.speedX + 100 > ctx.canvas.width) {
     this.speedX = -this.speedX; //reverses the Gem's trajectory when part of the Gem touches SIDE borders
-  } else if (this.x < 5) {
+  } else if (this.x < 0) {
     this.speedX = -this.speedX; //reverses the Gem's trajectory when part of the Gem touches SIDE borders
-  } else if (this.y < 5) {
+  } else if (this.y < 0) {
     this.speedY = -this.speedY; //reverses the Gem's trajectory when part of the Gem touches TOP borders
-  } else if (this.y + this.speedY + 160 > ctx.canvas.height) {
+  } else if (this.y + this.speedY + 180 > ctx.canvas.height) {
     this.speedY = -this.speedY; //reverses the Gem's trajectory when part of the Gem touches BOTTOM borders
   }
 
