@@ -14,6 +14,8 @@ const Enemy = function(x, y, speed) {
   this.x = x;
   this.y = y;
   this.speed = speed;
+  this.width = 100;
+  this.height = 75;
 };
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -22,10 +24,18 @@ Enemy.prototype.update = function(dt) {
   // which will ensure the game runs at the same speed for
   // all computers.
   dt = 20;
-  if (this.x >= 500) {
-    this.x = 0;
+
+  if (player1.x + player1.width > this.x &&
+    player1.x < this.x + this.width &&
+    player1.y + player1.height > this.y &&
+    player1.y < this.y + this.height) { //Collision detector
+    document.location.reload();
   }
-  this.x += this.speed;
+
+  if (this.x >= 500) {
+    this.x = -100; // places enemies all the way to the left to restart their journey
+  }
+  this.x += this.speed; //moves enemies accross canvas
 };
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -37,6 +47,8 @@ const Player = function(x, y) {
   this.sprite = 'images/char-horn-girl.png';
   this.x = x;
   this.y = y;
+  this.width = 75;
+  this.height = 90
 }
 // This class requires an update(), render() and
 Player.prototype.update = function(dt) {
@@ -44,6 +56,11 @@ Player.prototype.update = function(dt) {
   // which will ensure the game runs at the same speed for
   // all computers.
   dt = 20;
+  if (player.y == -5) { // detects if player makes it the water
+    setTimeout(function() {
+      onFinish();
+    }, 20);
+  }
 };
 
 Player.prototype.render = function() {
@@ -82,10 +99,6 @@ let player = player1;
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-  if (player.y == -5) { // detects if player makes it the water
-    onFinish();
-  }
-
   let allowedKeys = {
     37: 'left',
     38: 'up',
