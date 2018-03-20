@@ -29,7 +29,9 @@ Enemy.prototype.update = function(dt) {
     player1.x + 20 < this.x + this.width + 15 &&
     player1.y + 80 + player1.height > this.y + 85 &&
     player1.y + 80 < this.y + 85 + this.height) { //Collision detector fine tuned to hit boxes of player and bugs
-    document.location.reload();
+    player1.lives -= 1;
+    player1.x = 205;
+    player1.y = 445;
   }
 
   if (this.x >= 500) {
@@ -49,6 +51,7 @@ const Player = function(x, y) {
   this.y = y;
   this.width = 60;
   this.height = 55;
+  this.lives = 4;
 }
 // This class requires an update(), render() and
 Player.prototype.update = function(dt) {
@@ -56,6 +59,12 @@ Player.prototype.update = function(dt) {
   // which will ensure the game runs at the same speed for
   // all computers.
   dt = 20;
+  if (player1.lives == 0) { //checks to see if player lost all lives 
+    setTimeout(function() {
+      alert("Game Over");
+      document.location.reload();
+    }, 20);
+  }
   if (player.y == -5) { // detects if player makes it the water
     setTimeout(function() {
       onFinish();
@@ -65,6 +74,9 @@ Player.prototype.update = function(dt) {
 
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  ctx.fillText(`Lives: ${this.lives}`, 5, 40);
 };
 // a handleInput() method.
 Player.prototype.handleInput = function(param) {
