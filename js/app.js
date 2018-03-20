@@ -96,12 +96,13 @@ Player.prototype.handleInput = function(param) {
   }
 };
 
-const Collectable = function(x, y, speed, sprite) {
+const Collectable = function(x, y, speedX, speedY, sprite) {
   this.arr = [`images/Gem-Blue.png`, `images/Gem-Orange.png`, `images/Gem-Green.png`];
   this.sprite = this.arr[sprite];
   this.x = x;
   this.y = y;
-  this.speed = speed;
+  this.speedX = speedX;
+  this.speedY = speedY;
   this.width = 70;
   this.height = 70;
   this.state = 1;
@@ -117,10 +118,18 @@ Collectable.prototype.update = function(dt) {
     this.state = 0;
   }
 
-  if (this.x >= 500) {
-    this.x = -100; // places Gem all the way to the left to restart their journey
+  if (this.x + this.speedX + 90 > ctx.canvas.width) {
+    this.speedX = -this.speedX; //reverses the Gem's trajectory when part of the Gem touches SIDE borders
+  } else if (this.x < 5) {
+    this.speedX = -this.speedX; //reverses the Gem's trajectory when part of the Gem touches SIDE borders
+  } else if (this.y < 5) {
+    this.speedY = -this.speedY; //reverses the Gem's trajectory when part of the Gem touches TOP borders
+  } else if (this.y + this.speedY + 160 > ctx.canvas.height) {
+    this.speedY = -this.speedY; //reverses the Gem's trajectory when part of the Gem touches BOTTOM borders
   }
-  this.x += this.speed; // moves Gem accross canvas
+
+  this.x += this.speedX;
+  this.y += this.speedY; // moves Gem accross canvas
 };
 
 Collectable.prototype.render = function() {
@@ -131,9 +140,9 @@ Collectable.prototype.render = function() {
 
 // Now instantiate your objects.
 let player1 = new Player(205, 445);
-let blue = new Collectable(10, 50, 3, 0);
-let orange = new Collectable(10, 150, 1.5, 1);
-let green = new Collectable(10, 250, 1, 2);
+let blue = new Collectable(10, 50, 3, -3, 0);
+let orange = new Collectable(10, 150, 1.5, -1.5, 1);
+let green = new Collectable(10, 250, 1, -1, 2);
 let enemy1 = new Enemy(5, 60, 2);
 let enemy2 = new Enemy(5, 143, 3);
 let enemy3 = new Enemy(5, 226, 5);
