@@ -52,14 +52,14 @@ const Player = function(x, y) {
   this.width = 60;
   this.height = 55;
   this.lives = 4;
-}
+};
 // This class requires an update(), render() and
 Player.prototype.update = function(dt) {
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
   dt = 20;
-  if (player1.lives == 0) { //checks to see if player lost all lives 
+  if (player1.lives == 0) { //checks to see if player lost all lives
     setTimeout(function() {
       alert("Game Over");
       document.location.reload();
@@ -96,17 +96,53 @@ Player.prototype.handleInput = function(param) {
   }
 };
 
+const Collectable = function(x, y, speed, sprite) {
+  this.arr = [`images/Gem-Blue.png`, `images/Gem-Orange.png`, `images/Gem-Green.png`];
+  this.sprite = this.arr[sprite];
+  this.x = x;
+  this.y = y;
+  this.speed = speed;
+  this.width = 70;
+  this.height = 70;
+  this.state = 1;
+};
+
+Collectable.prototype.update = function(dt) {
+  dt = 20;
+
+  if (player1.x + 20 + player1.width > this.x + 15 &&
+    player1.x + 20 < this.x + this.width + 15 &&
+    player1.y + 80 + player1.height > this.y + 75 &&
+    player1.y + 80 < this.y + this.height + 75) { //Collision detector fine tuned to hit boxes of player and Gems
+    this.state = 0;
+  }
+
+  if (this.x >= 500) {
+    this.x = -100; // places Gem all the way to the left to restart their journey
+  }
+  this.x += this.speed; // moves Gem accross canvas
+};
+
+Collectable.prototype.render = function() {
+  if (this.state == 1) {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  }
+};
+
 // Now instantiate your objects.
 let player1 = new Player(205, 445);
+let blue = new Collectable(10, 50, 3, 0);
+let orange = new Collectable(10, 150, 1.5, 1);
+let green = new Collectable(10, 250, 1, 2);
 let enemy1 = new Enemy(5, 60, 2);
 let enemy2 = new Enemy(5, 143, 3);
 let enemy3 = new Enemy(5, 226, 5);
 // Place all enemy objects in an array called allEnemies
 let allEnemies = [enemy1, enemy2, enemy3]
+
+let collectables = [blue, orange, green];
 // Place the player object in a variable called player
 let player = player1;
-
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

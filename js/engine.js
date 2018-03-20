@@ -93,6 +93,9 @@ var Engine = (function(global) {
     allEnemies.forEach(function(enemy) {
       enemy.update(dt);
     });
+    collectables.forEach(function(color) {
+      color.update(dt);
+    });
     player.update();
   }
 
@@ -153,6 +156,10 @@ var Engine = (function(global) {
       enemy.render();
     });
 
+    collectables.forEach(function(color) {
+      color.render();
+    });
+
     player.render();
   }
 
@@ -174,7 +181,10 @@ var Engine = (function(global) {
     'images/grass-block.png',
     'images/enemy-bug.png',
     'images/char-boy.png',
-    'images/char-horn-girl.png'
+    'images/char-horn-girl.png',
+    'images/Gem-Blue.png',
+    'images/Gem-Orange.png',
+    'images/Gem-Green.png'
   ]);
   Resources.onReady(init);
 
