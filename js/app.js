@@ -25,13 +25,13 @@ Enemy.prototype.update = function(dt) {
   // all computers.
   dt = 20;
 
-  if (player1.x + 20 + player1.width > this.x + 15 &&
-    player1.x + 20 < this.x + this.width + 15 &&
-    player1.y + 80 + player1.height > this.y + 85 &&
-    player1.y + 80 < this.y + 85 + this.height) { //Collision detector fine tuned to hit boxes of player and bugs
-    player1.lives -= 1;
-    player1.x = 205;
-    player1.y = 445;
+  if (player.x + 20 + player.width > this.x + 15 &&
+    player.x + 20 < this.x + this.width + 15 &&
+    player.y + 80 + player.height > this.y + 85 &&
+    player.y + 80 < this.y + 85 + this.height) { //Collision detector fine tuned to hit boxes of player and bugs
+    player.lives -= 1;
+    player.x = 205;
+    player.y = 445;
   }
 
   if (this.x >= 500) {
@@ -60,13 +60,13 @@ Player.prototype.update = function(dt) {
   // which will ensure the game runs at the same speed for
   // all computers.
   dt = 20;
-  if (player1.lives == 0) { //checks to see if player lost all lives
+  if (this.lives == 0) { //checks to see if player lost all lives
     setTimeout(function() {
       alert("Game Over");
       document.location.reload();
     }, 20);
   }
-  if (player.y == -5) { // detects if player makes it the water
+  if (this.y == -5) { // detects if player makes it the water
     setTimeout(function() {
       onFinish();
     }, 20);
@@ -84,16 +84,16 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(param) {
   switch (param) { // Makes sure Player can not move off screen
     case "left":
-      (player1.x > 49) ? player1.x -= 50: null;
+      (this.x > 49) ? this.x -= 50: null;
       break;
     case "right":
-      (player1.x < 404) ? player1.x += 50: null;
+      (this.x < 404) ? this.x += 50: null;
       break;
     case "down":
-      (player1.y < 445) ? player1.y += 50: null;
+      (this.y < 445) ? this.y += 50: null;
       break;
     case "up":
-      (player1.y == -5) ? null: player1.y -= 50;
+      (this.y == -5) ? null: this.y -= 50;
       break;
   }
 };
@@ -114,12 +114,12 @@ Collectable.prototype.update = function(dt) {
   dt = 20;
 
   if (this.state == 1) {
-    if (player1.x + 20 + player1.width > this.x + 15 &&
-      player1.x + 20 < this.x + this.width + 15 &&
-      player1.y + 80 + player1.height > this.y + 75 &&
-      player1.y + 80 < this.y + this.height + 75) { //Collision detector fine tuned to hit boxes of player and Gems
+    if (player.x + 20 + player.width > this.x + 15 &&
+      player.x + 20 < this.x + this.width + 15 &&
+      player.y + 80 + player.height > this.y + 75 &&
+      player.y + 80 < this.y + this.height + 75) { //Collision detector fine tuned to hit boxes of player and Gems
       this.state = 0;
-      player1.gems += 1;
+      player.gems += 1;
     }
   }
 
@@ -144,7 +144,7 @@ Collectable.prototype.render = function() {
 };
 
 // Now instantiate your objects.
-let player1 = new Player(205, 445);
+let player = new Player(205, 445);
 let blue = new Collectable(10, 50, 3, -3, 0);
 let orange = new Collectable(10, 150, 1.5, -1.5, 1);
 let green = new Collectable(10, 250, 1, -1, 2);
@@ -156,7 +156,6 @@ let allEnemies = [enemy1, enemy2, enemy3]
 
 let collectables = [blue, orange, green];
 // Place the player object in a variable called player
-let player = player1;
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
